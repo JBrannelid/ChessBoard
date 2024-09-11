@@ -20,14 +20,14 @@ namespace ChessBoard
             Console.WriteLine($"Välkommen till ChessBoard!\n");
             Console.Write("Hur stor vill du att chackbrädan ska vara?\n" +
                           "Skriv en siffra mellan 1-10: ");
-            inputNumber = ReadInt.userTestInput(inputNumber);
+            inputNumber = ReadInt.UserTestInput(inputNumber);
             Console.WriteLine("");
 
             DrawBoard(inputNumber, userBlackTile, userWhiteTile);
 
             while (!endApp)
             {
-                printMenu();
+                PrintMenu();
                 userInput = Console.ReadLine().ToUpper();
                 Console.Clear();
 
@@ -36,7 +36,7 @@ namespace ChessBoard
                     case "A":
                         Console.Write("Hur stor vill du att chackbrädan ska vara?\n" +
                                       "Skriv en siffra mellan 1-10: ");
-                        inputNumber = ReadInt.userTestInput(inputNumber);
+                        inputNumber = ReadInt.UserTestInput(inputNumber);
                         Console.WriteLine("");
                         DrawBoard(inputNumber, userBlackTile, userWhiteTile);
                         break;
@@ -59,7 +59,7 @@ namespace ChessBoard
                 }
             }
         }
-        static void printMenu()
+        static void PrintMenu()
         {
             Console.WriteLine();
             Console.WriteLine("Menyval");
@@ -101,12 +101,13 @@ namespace ChessBoard
 }
 /* README
  * The program uses 1 declared and 4 initialized variabels
- * Variabel inputNumber call the class ReadInt and function userTestInput
- * The function UserTestInput check if the input is an integer within choosen interval. If true, return the value
+ * Variabel inputNumber call the class ReadInt and func UserTestInput
+ * The func UserTestInput check if the input is an integer within choosen interval
  * 
- * The main programfile (Program.cs) use three functions. PrintMenu, DrawBoard and changeTiles
- * PrintMenu print out the menu for swith-statments
- * DrawBoard and ChangeTiles print out the chessboard by a nested loop. i-loop counting rows, j-loop counting columns. 
- * The nested loop continue as long as choosen inpuNumber choosen by the user
+ * The program run in a while-loop with switch-statment. While-loop continued until bool endApp = true
+ * 
+ * The class program use 4 functions. func Main, func PrintMenu, func DrawBoard and func ChangeTiles
+ * PrintMenu print out the menu for switch-statments
+ * DrawBoard and ChangeTiles print out the chessboard by a nested for-loop. i-loop counting rows, j-loop counting columns 
  * A ternary operator "if-statment" in j-loop alternate the white/black square based on the sum of the row and column result
 */

@@ -5,7 +5,7 @@ namespace ChessBoard
 {
     public static class ReadInt
     {
-        public static int userTestInput(int failTestNumber)
+        public static int UserTestInput(int failTestNumber)
         {
             while (true)
             {
@@ -25,9 +25,9 @@ namespace ChessBoard
     }
 }
 /* README
- * ReadInt method. Public static class so that the method can be called outside this class
+ * Public static class so that the func can be called outside this class
  * Convert userInput to an integer in an nested if-statment
- * While-loop is set to true. If condition is meet, break out from the loop and return failTestNumber
+ * While-loop is set to true. If if-condition is meet, break out from the loop and return failTestNumber
  * 
  * Questions: Är det möjligt att retunera ett värde med ternary operator i console.writeline?
  * ex:        console.writeline(num <= 1 && num <=19) ? return num : "försök igen");
