@@ -3,16 +3,19 @@ using System;
 
 namespace ChessBoard
 {
+    // The functions convert string to an integer and promt user in a do while-loop to insert a valid input
+    // Break out from the loop with return and pass over bool valut true/false 
+    // In that way could we safe convert a string, have conditions and promt for a valid result without breaking the program
     public static class ReadInt
     {
-        public static int UserTestInput(int failTestNumber)
+        public static int UserTestInput(int result)
         {
-            while (true)
+            do
             {
-                if (int.TryParse(Console.ReadLine(), out failTestNumber))
+                if (int.TryParse(Console.ReadLine(), out result))
                 {
-                    if (failTestNumber >= 1 && failTestNumber <= 10)
-                        return failTestNumber;
+                    if (result > 0 && result <= 10)
+                        return result;
                     else
                         Console.WriteLine("Siffran är utanför det tillåtna intervallet");
                 }
@@ -20,16 +23,21 @@ namespace ChessBoard
                 {
                     Console.WriteLine("Du skrev inte in ett heltal. Försök igen:");
                 }
-            }
+            } while (true);
+        }
+        public static int UserTestInputTiles(int result)
+        {
+            do
+            {
+                if (int.TryParse(Console.ReadLine(), out result))
+                {
+                    return result;
+                }
+                else
+                {
+                    Console.WriteLine("Du skrev inte in ett heltal. Försök igen:");
+                }
+            } while (true);
         }
     }
 }
-/* README
- * Public static class so that the func can be called outside this class
- * Convert userInput to an integer in an nested if-statment
- * While-loop is set to true. If if-condition is meet, break out from the loop and return failTestNumber
- * 
- * Questions: Är det möjligt att retunera ett värde med ternary operator i console.writeline?
- * ex:        console.writeline(num <= 1 && num <=19) ? return num : "försök igen");
- *                                                      return blir error i körning 
-*/
