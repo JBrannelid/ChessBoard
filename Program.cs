@@ -14,9 +14,10 @@ namespace ChessBoard
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+            // New object
+            ChessBoard chessBoardTiles = new ChessBoard("◻︎", "◼︎"); // Default white and black tiles
+
             int boardSize = 0;
-            string userBlackTileChar = "◻︎"; // Default white char
-            string userWhiteTileChar = "◼︎"; // Default black char
             string userInput = "";
             bool endApp = false;
 
@@ -28,7 +29,7 @@ namespace ChessBoard
             Console.Clear();
 
             // Initialize a 2D arrey for holding rowLabel and column. Tell C# if a string should hold a white, black or empty string
-            string[,] boardState = BoardState(boardSize, userBlackTileChar, userWhiteTileChar);
+            string[,] boardState = BoardState(boardSize, chessBoardTiles.BlackTiles, chessBoardTiles.WhiteTiles);
             // Take user board size input and call function boardState drawing the chessboard 
             DrawBoard(boardSize, boardState);
 
@@ -49,19 +50,19 @@ namespace ChessBoard
                         boardSize = ReadInt.UserTestInput(boardSize);
 
                         // Read user valid input and change variable boardState 2D-arrey
-                        boardState = InitializeBoard(boardSize, userBlackTileChar, userWhiteTileChar); 
+                        boardState = InitializeBoard(boardSize, chessBoardTiles.BlackTiles, chessBoardTiles.WhiteTiles); 
                         Console.Clear();
                         DrawBoard(boardSize, boardState); // Draw the new custom size board 
                         break;
                     case "B":
-                        Console.WriteLine("Hur ska svarta rutor se ut?");
-                        userBlackTileChar = Console.ReadLine();
-                        Console.WriteLine("Hur ska vita rutor se ut?");
-                        userWhiteTileChar = Console.ReadLine();
+                        Console.WriteLine("Hur ska svarta rutor se ut? (1 valfri tecken/symbol)");
+                        chessBoardTiles.BlackTiles = Console.ReadLine();
+                        Console.WriteLine("Hur ska vita rutor se ut? (1 valfri tecken/symbol)");
+                        chessBoardTiles.WhiteTiles = Console.ReadLine();
                         Console.WriteLine("");
 
                         // Change the tiles and update the boardState. Draw the new board base on the changed tiles 
-                        boardState = InitializeBoard(boardSize, userBlackTileChar, userWhiteTileChar);
+                        boardState = InitializeBoard(boardSize, chessBoardTiles.BlackTiles, chessBoardTiles.WhiteTiles);
                         DrawBoard(boardSize, boardState);
                         break;
                     case "C":
@@ -71,12 +72,12 @@ namespace ChessBoard
                         string column = Console.ReadLine();
                         Console.WriteLine("Ange 'V' för vit pjäs eller 'S' för svart pjäs (S eller V)");
 
-                        PlacePiece(row, column, boardSize, boardState, userBlackTileChar, userWhiteTileChar);
+                        PlacePiece(row, column, boardSize, boardState, chessBoardTiles.BlackTiles, chessBoardTiles.WhiteTiles);
                         break;
                     case "D":
                         // Set While-loop condition to true. Because there is no code outside the While-loop will the console app close
                         endApp = true;
-                        Console.WriteLine("Välkommen tillbaka!");
+                        Console.WriteLine("Hejdå! Kom tillbaka snart!");
                         break;
                     default:
                         Console.Write("Fel inmatning, välj alternativ A, B, C eller D");
@@ -112,6 +113,34 @@ namespace ChessBoard
             Console.WriteLine("[4]: ♝ - Svart Löpare");
             Console.WriteLine("[5]: ♞ - Svart Springare");
             Console.WriteLine("[6]: ♟ - Svart Bonde");
+        }
+        // Draw board base on the size choosen by the user and current state 
+        static void DrawBoard(int size, string[,] boardState)
+        {
+            //First for-loop print horizontal numbers. A blank text for lineup the horizontal line to the boards tiles 
+            Console.Write("🤴");
+            for (int columnLabel = 0; columnLabel < size; columnLabel++)
+            {
+                Console.Write($" {columnLabel}");
+            }
+
+            Console.WriteLine("");
+
+            // Outer loop handles the row character label. The inner loop handles the tiles.
+            for (int i = 0; i < size; i++)
+            {
+                // Print row labels from 'A' at the top to 'A' + (i)
+                char rowLabel = (char)('A' + i);
+                Console.Write($" {rowLabel} ");
+
+                for (int j = 0; j < size; j++)
+                {
+                    // Prints the value at boardState[i, j] left-aligned in a field of width 2.
+                    // If the value is shorter than 2 characters, it is padded with a space on the right for symetrix boardpresentatoin
+                    Console.Write($"{boardState[i, j],-2}");
+                }
+                Console.WriteLine();
+            }
         }
         // Function initialize a new board depending on custom tiles or board sizes
         static string[,] InitializeBoard(int size, string blackTile, string whiteTile)
@@ -192,34 +221,6 @@ namespace ChessBoard
             if (color == "V" && pieceIndex >= 1 && pieceIndex <= 6) return whiteTiles[pieceIndex - 1];
 
             return "👸"; // Default piece
-        }
-        // Draw board base on the size choosen by the user and current state 
-        static void DrawBoard(int size, string[,] boardState)
-        {
-            //First for-loop print horizontal numbers. A blank text for lineup the horizontal line to the boards tiles 
-            Console.Write("🤴");
-            for (int columnLabel = 0; columnLabel < size; columnLabel++)
-            {
-                Console.Write($" {columnLabel}");
-            }
-
-            Console.WriteLine("");
-
-            // Outer loop handles the row character label. The inner loop handles the tiles.
-            for (int i = 0; i < size; i++)
-            {
-                // Print row labels from 'A' at the top to 'A' + (i)
-                char rowLabel = (char)('A' + i); 
-                Console.Write($" {rowLabel} ");
-
-                for (int j = 0; j < size; j++)
-                {
-                    // Prints the value at boardState[i, j] left-aligned in a field of width 2.
-                    // If the value is shorter than 2 characters, it is padded with a space on the right for symetrix boardpresentatoin
-                    Console.Write($"{boardState[i, j],-2}");
-                }
-                Console.WriteLine();
-            }
         }
     }
 }
